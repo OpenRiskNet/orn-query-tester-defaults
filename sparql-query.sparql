@@ -1,14 +1,15 @@
 PREFIX orn: <http://openrisknet.org/schema/>
+# Only one query can be active at a time, the rest have to be commented out
 
 # A very simple query the title of the Api:
-#SELECT ?title
-#WHERE {
-#?tool orn:info ?info.
-#?info orn:title ?title
-#}
+SELECT ?title
+WHERE {
+?tool orn:info ?info.
+?info orn:title ?title
+}
 
 # Get all tripples that could be resolved using the JsonLd context
-SELECT * {?s ?p ?o}
+#SELECT * {?s ?p ?o}
 
 # Get all high level inputs and outputs for available endpoints of an API
 #SELECT * 
