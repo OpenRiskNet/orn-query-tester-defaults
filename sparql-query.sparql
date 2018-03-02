@@ -1,0 +1,25 @@
+PREFIX orn: <http://openrisknet.org/schema/>
+
+# A very simple query the title of the Api:
+SELECT ?title
+WHERE {
+?tool orn:info ?info.
+?info orn:title ?title
+}
+
+# Get all tripples that could be resolved using the JsonLd context
+#SELECT * {?s ?p ?o}
+
+# Get all high level inputs and outputs for available endpoints of an API
+#SELECT * 
+#WHERE {
+#  ?endpoint orn:expects|orn:returns ?inputoutput
+#}
+
+
+# Get all nodes that are both a Prediction and a MolWeight
+#PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+#SELECT * 
+#{?s rdf:type orn:Prediction .
+#?s rdf:type orn:MolWeight
+#}
