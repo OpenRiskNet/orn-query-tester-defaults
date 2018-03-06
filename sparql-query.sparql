@@ -29,12 +29,11 @@ WHERE {
 # Get the route of the sevice and type of compound to get MolWeight
 # This example assumes to use a GET request.
 # REST methods only defined as predicates so far and can not be queried ?!
-
-SELECT ?route ?expect ?type WHERE {
-?route a orn:Prediction.
-?route orn:returns orn:molecularMass.
-?route orn:Get ?get.
-?route orn:expects ?expect.
-?get orn:OperationParameters ?op.
-?op a ?type
-}
+#SELECT ?route ?expect ?type WHERE {
+# ?route a orn:Prediction.
+# ?route orn:returns orn:molecularMass.
+# ?route orn:Get ?get.
+# ?route orn:expects ?expect.
+# ?get orn:OperationParameters ?op.
+# ?op a ?type
+#}
