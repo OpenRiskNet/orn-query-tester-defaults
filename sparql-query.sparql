@@ -18,9 +18,22 @@ WHERE {
 #}
 
 
+# This does not give a result !
 # Get all nodes that are both a Prediction and a MolWeight
 #PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 #SELECT * 
 #{?s rdf:type orn:Prediction .
 #?s rdf:type orn:MolWeight
+#}
+
+# Get the route of the sevice and type of compound to get MolWeight
+# This example assumes to use a GET request.
+# REST methods only defined as predicates so far and can not be queried ?!
+#SELECT ?route ?expect ?type WHERE {
+# ?route a orn:Prediction.
+# ?route orn:returns orn:molecularMass.
+# ?route orn:Get ?get.
+# ?route orn:expects ?expect.
+# ?get orn:OperationParameters ?op.
+# ?op a ?type
 #}
