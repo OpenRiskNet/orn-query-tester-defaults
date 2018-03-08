@@ -1,0 +1,166 @@
+{
+  "@context": {
+    "x-orn": "http://openrisknet.org/schema/",
+    "x-orn-@id": "@id",
+    "x-orn-@type": "@type",
+ 
+    "id": "x-orn:itentifier",
+
+    "testitem": "x-orn:testedWith",
+    "substance": "x-orn:exposedTo",
+    "compound": "x-orn:composedOf",
+    "cas": "x-orn:CAS",
+    "code": "x-orn:code",
+    "name": "x-orn:name",
+    "smiles": "x-orn:smiles",
+    "formula": "x-orn:molecularFormula",
+    "physchem": "x-orn:hasProperties", 
+    "molweight": "x-orn:molecularWeight",
+    "structureCategory": "x-orn:structureCategory",
+    "logP": "x-orn:logP",
+
+    "citation": "x-orn:publishedIn",
+    "author": "x-orn:authors",
+    "journal": "x-orn:journal",
+    "publicationdate": "x-orn:year",
+    "volumenumber":  "x-orn:volumeNumber",
+    "startpage": "x-orn:startPage",
+    "source_url": "x-orn:url",
+    
+    "assay": "x-orn:testedOn",
+    "class": "x-orn:class",
+    "testsystem": "x-orn:isExposed",
+    "species": "x-orn:species",
+    "target": "x-orn:influences",
+    "proteinsubtype": "x-orn:proteinSubtype",
+    "proteindomain":"x-orn:proteinDomain",
+    "exposure": "x-orn:exposedAccordingTo",
+    "route": "x-orn:routeOfAdmission",
+
+    "results": "x-orn:produces",
+    "endpoint1": "x-orn:hasProperties",
+    "endpointName": "x-orn:name",
+    "readout": "x-orn:measured",
+    "endpointvalue": "x-orn:value",
+    "endpointunit": "x-orn:unit"
+  },
+
+  "id": {
+    "description": "ID"
+  },
+  "testitem": {
+    "@id": "_:testItem",
+    "x-orn-@type": "x-orn:testItem",
+    "substance": {
+      "x-orn-@type": "x-orn:substance",
+      "id": {
+        "x-orn-@type": "x-orn:identifier",
+        "code": {
+          "description": "COMPOUND_CODE"
+        },
+        "cas": {
+          "description": "CAS_NUMBER"
+        },
+        "subName": {
+          "description": "COMPOUND_NAME"
+        }
+      },
+      "compound": {
+        "x-orn-@type": "x-orn:compound",
+        "id": {
+          "x-orn-@type": "x-orn:identifier",
+          "smiles": {
+            "description": "SMILES"
+          },
+          "formula": {
+            "description": "FMLA"
+          }
+        },
+        "physchem": {
+          "x-orn-@type": "x-orn:physchemProperty",
+          "molweight": {
+            "description": "MOLECULAR_WEIGHT"
+          },
+          "structurecategory": {
+            "description": "STRUCTURECATEGORY"
+          }
+        }
+      },
+      "physchem": {
+        "x-orn-@type": "x-orn:physchemProperty",
+        "logP": {
+          "description": "KOWLOGP"
+        }
+      }
+    }
+  },
+  "citation": {
+    "x-orn-@type": "x-orn:citation",
+    "authors": {
+      "description": "AUTHORS"
+    },
+    "journal": {
+      "description": "JOURNAL"
+    },
+    "publicationdate": {
+      "description": "PUBLCIATION_DATE"
+    },
+    "volumenumber": {
+      "description": "VOLUME_NUMBER"
+    },
+    "startpage": {
+      "description": "START_PAGE"
+    },
+    "source_url": {
+      "description": "SOURCE_URL"
+    }
+  },
+  "assay": {
+    "x-orn-@type": "x-orn:assay",
+    "assayname": {
+      "description": "ASSAY_NAME"
+    },
+    "assayclass": {
+      "description": "ASSAY_CLASS"
+    },
+    "testsystem": {
+      "x-orn-@type": "x-orn:testsystem",
+      "species": {
+        "description": "SPECIES_STRAIN"
+      },
+      "target": {
+        "x-orn-@type": "x-orn:target",
+        "proteinsubtype": {
+          "description": "PROTEIN_SUBTYPE"
+        },
+        "proteindomain": {
+          "description": "PROTEIN_DOMAIN"
+        }
+      }
+    },
+    "exposure": {
+      "x-orn-@type": "x-orn:exposure",
+      "route": {
+        "description": "ROUTE_OF_COMPOUND"
+      }
+    }
+  },
+  "results": {
+    "x-orn-@type": "x-orn:results",
+    "endpoint1": {
+      "x-orn-@type": "x-orn:endpoint",
+      "endpointName": {
+        "description": "ENDPOINT_NAME"
+      },
+      "readout": {
+        "x-orn-@type": "x-orn:readout",
+        "endpointvalue": {
+          "description": "ENDPOINT_VALUE"
+        },
+        "endpointunit": {
+          "description": "ENDPOINT_UNIT"
+        }
+      }
+    }
+  }
+}
