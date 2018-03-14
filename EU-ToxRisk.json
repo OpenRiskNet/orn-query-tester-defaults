@@ -1,0 +1,307 @@
+{
+  "@context": {
+    "x-orn": "http://openrisknet.org/schema/",
+    "x-orn-@id": "@id",
+    "x-orn-@type": "@type"
+  },
+  "id": {
+    "description": "Sample ID"
+  },
+  "experimentID": {
+    "description": "Experiment ID"
+  },
+  "date": {
+    "description": "Date"
+  },
+  "organization": {
+    "@id": "_:organization",
+    "name": {
+      "description": "Organization full name"
+    },
+    "abbreviation": {
+      "description": "Organization abbreviation"
+    },
+    "principleInvestigator": {
+      "name": {
+        "description": "Name of PI"
+      }
+    },
+    "operator": {
+      "name": {
+        "description": "Person entering data"
+      },
+      "email": {
+        "description": "E-mail"
+      }
+    }
+  },
+  "testitem": {
+    "@id": "_:testItem",
+    "x-orn-@type": "x-orn:testItem",
+    "substance": {
+      "x-orn-@type": "x-orn:substance",
+      "id": {
+        "x-orn-@type": "x-orn:identifier",
+        "code": {
+          "description": "Compound number in this data sheet"
+        },
+        "subNameSheet": {
+          "description": "Compound name as used in metadata sheet"
+        },
+        "subName": {
+          "description": "Compound name of actual form used"
+        },
+        "cas": {
+          "description": "CAS_number"
+        }
+      },
+      "compound": {
+        "x-orn-@type": "x-orn:compound",
+        "id": {
+          "x-orn-@type": "x-orn:identifier",
+          "smiles": {
+            "description": "SMILES"
+          }
+        }
+      },
+      "supplier": {
+        "x-orn-@type": "x-orn:supplier",
+        "name": {
+          "description": "Supplier"
+        },
+        "orderNumber": {
+          "description": "Order number"
+        },
+        "lotNumber": {
+          "description": "Lot number"
+        },
+        "state": {
+          "description": "Compound form"
+        },
+        "storageTemperature": {
+          "description": "Storage temperature of unsolved compound (powder, liquid, beats, etc)"
+        }
+      },
+      "stockSolution": {
+        "x-orn-@type": "x-orn:stockSolution",
+        "stockSolvent": {
+          "description": "Stock solvent"
+        },
+        "concentration": {
+          "x-orn-@type": "x-orn:concentration",
+          "value": {
+            "description": "Stock concentration"
+          },
+          "unit": {
+            "description": "Stock concentration unit"
+          }
+        },
+        "storageTemperature": {
+          "description": "Stock aliquot storage"
+        }
+      }
+    }
+  },
+  "assay": {
+    "x-orn-@type": "x-orn:assay",
+    "assayName": {
+      "description": "Method name"
+    },
+    "toxicityDomain": {
+      "description": "Toxicity domain"
+    },
+    "informationDomain": {
+      "description": "Information domain"
+    },
+    "biologicalModel": {
+      "x-orn-@type": "x-orn:testsystem",
+      "species": {
+        "description": "Organism"
+      },
+      "organ": {
+        "description": "Organ"
+      },
+      "dimension": {
+        "description": "dimension"
+      },
+      "heterogeneity": {
+        "description": "Heterogeneity"
+      },
+      "dynamics": {
+        "description": "Dynamics"
+      },
+      "differentiationStatus": {
+        "description": "Differentiation status"
+      },
+      "complexity": {
+        "description": "complexity"
+      },
+      "cellModel": {
+        "x-orn-@type": "x-orn:cellsystem",
+        "type": {
+          "description": "Cell type"
+        },
+        "name": {
+          "description": "Cell name"
+        },
+        "lotNumber": {
+          "description": "Cell donor or lot"
+        },
+        "batch": {
+          "description": "Cell batch"
+        },
+        "passage": {
+          "description": "Cell passage"
+        }
+      },
+      "sex": {
+        "description": "Sex"
+      },
+      "seeding": {
+        "x-orn-@type": "x-orn:seeding",
+        "contactInhibition": {
+          "description": "Contact inhibition"
+        },
+        "seedingDensity": {
+          "x-orn-@type": "x-orn:seedingDensity",
+          "value": {
+            "description": "Seeding density"
+          },
+          "unit": {
+            "description": "Seeding density unit"
+          }
+        },
+        "populationDoublingTime": {
+          "x-orn-@type": "x-orn:populationDoublingTime",
+          "value": {
+            "description": "Population doubling time"
+          },
+          "unit": {
+            "description": "Population doubling time unit"
+          }
+        }
+      }     
+    },
+    "treatment": {
+      "x-orn-@type": "x-orn:treatment",
+      "sampleType": {
+        "description": "Sample type"
+      },
+      "groupId": {
+        "description": "Group ID"
+      },
+      "concentration": {
+        "x-orn-@type": "x-orn:concentration",
+        "value": {
+          "description": "Concentration"
+        },
+        "unit": {
+          "description": "Concentration unit"
+        }
+      },
+      "treamtentScheme": {
+        "description": "Treatment scheme"
+      },
+      "exposure": {
+        "x-orn-@type": "x-orn:exposure",
+        "dosage": {
+          "description": "Dosage"
+        },
+        "doseMaintenance": {
+          "description": "Dose maintenance"
+        },
+        "exposureTime": {
+          "x-orn-@type": "x-orn:time",
+          "value": {
+            "description": "Exposure time"
+          },
+          "unit": {
+            "description": "Exposure time unit"
+          }
+        }
+      }
+    }
+  },
+  "experimentalSetup": {
+    "x-orn-@type": "x-orn:expSetup",
+    "plate": {
+      "x-orn-@type": "x-orn:plate",
+      "format": {
+        "description": "Plate format"
+      },
+      "manufacturer": {
+        "description": "Plate manufacturer"
+      },
+      "row": {
+        "description": "Plate row"
+      },
+      "column": {
+        "description": "Plate column"
+      }
+    },
+    "automatication": {
+      "description": "Platewise or stack"
+    },
+    
+    "controls": {
+      "x-orn-@type": "x-orn:controls",
+      "negative": {
+        "description": "Pairing blank"
+      },
+      "positive": {
+        "description": "Pairing positive control"
+      }
+    },
+    "replicates": {
+      "x-orn-@type": "x-orn:replicates",
+      "biologicalReplicate": {
+        "description": "Biological replicate"
+      },
+      "numberTechnicalReplicates": {
+        "description": "Technical repicates"
+      }
+    }
+  },
+  "results": {
+    "x-orn-@type": "x-orn:results",
+    "qualityCheck": {
+      "description": "Quality check passed"
+    },
+    "numberEndpoints": {
+      "description": "Number of endpoints"
+    },
+    "endpoint1": {
+      "x-orn-@type": "x-orn:endpoint",
+      "endpointName": {
+        "description": "Endpoint 1 measure"
+      },
+      "endpointDefinition": {
+        "description": "Endpoint 1 definition"
+      },
+      "endpointType": {
+        "description": "Endpoint 1 type"
+      },
+      "endpointReadoutMethod": {
+        "description": "Endpoint 1 readout method"
+      },
+      "readout": {
+        "x-orn-@type": "x-orn:readout",
+        "value": {
+          "description": "Endpoint 1 data"
+        },
+        "unit": {
+          "description": "Endpoint 1 data unit"
+        },
+        "mean": {
+          "description": "Endpoint 1 mean"
+        },
+        "standardDeviationAbs": {
+          "description": "Endpoint 1 standard deviation (absolute)"
+        }
+      }
+    }
+  },
+  "comments": {
+    "description": "Comments / problems with compound"
+  }
+}
