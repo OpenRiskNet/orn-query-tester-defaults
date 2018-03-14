@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "x-orn": "http://openrisknet.org/schema/",
+    "x-orn-@id": "@id",
+    "x-orn-@type": "@type",
+ 
+    "id": "x-orn:itentifier",
+
+    "cas": "x-orn:CAS",
+    "code": "x-orn:code",
+    "name": "x-orn:name",
+    "smiles": "x-orn:smiles",
+    "formula": "x-orn:molecularFormula"
+  },
+
+  "id": {
+    "description": "ID"
+  },
+  "code": {
+    "description": "COMPOUND_CODE",
+    "x-orn-@type": ["x-orn:identifier", "x-orn:substance", "x-orn:testItem"]
+  },
+  "cas": {
+    "description": "CAS_NUMBER",
+    "x-orn-@type": ["x-orn:identifier", "x-orn:substance", "x-orn:testItem"]
+  },
+  "subName": {
+    "description": "COMPOUND_NAME",
+    "x-orn-@type": ["x-orn:identifier", "x-orn:substance", "x-orn:testItem"]
+  },
+  "smiles": {
+    "description": "SMILES",
+    "x-orn-@type": ["x-orn:identifier", "x-orn:substance", "x-orn:compound", "x-orn:testItem"]
+  },
+  "formula": {
+    "description": "FMLA",
+    "x-orn-@type": ["x-orn:identifier", "x-orn:substance", "x-orn:compound", "x-orn:testItem"]
+  }
+}
