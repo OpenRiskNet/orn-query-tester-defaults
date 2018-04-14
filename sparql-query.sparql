@@ -12,19 +12,23 @@ WHERE {
 #SELECT * {?s ?p ?o}
 
 # Get all high level inputs and outputs for available endpoints of an API
-#SELECT * 
+#SELECT *
 #WHERE {
 #  ?endpoint orn:expects|orn:returns ?inputoutput
 #}
 
-
-# This does not give a result !
-# Get all nodes that are both a Prediction and a MolWeight
-#PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-#SELECT * 
-#{?s rdf:type orn:Prediction .
-#?s rdf:type orn:MolWeight
+# Select all endpoints that take smiles as parameter input and give inchis as output
+#SELECT ?endpoint
+#WHERE {
+# ?endpoint rdf:type <orn:Endpoint>.
+# ?endpoint orn:Get ?get.
+# ?get orn:OperationParameters ?params.
+# ?params (orn:expects|!orn:expects)* <http://semanticscience.org/resource/CHEMINF_000018>.
+# ?get orn:OperationResponses ?responses.
+# ?responses (orn:expects|!orn:expects)* ?responsechild.
+# ?responsechild <http://semanticscience.org/resource/CHEMINF_000113> ?inchinode
 #}
+
 
 # Get the route of the sevice and type of compound to get MolWeight
 # This example assumes to use a GET request.
