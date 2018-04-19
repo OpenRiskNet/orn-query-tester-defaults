@@ -1,32 +1,9 @@
 {"@context": {
-  "x-orn": "http://openrisknet.org/schema/",
+  "@vocab": "http://openrisknet.org/schema#",
+  "x-orn": "http://openrisknet.org/schema#",
   "x-orn-@id": "@id",
   "x-orn-@type":"@type",
   "title": "x-orn:title",
-  "info": "x-orn:info",
-  "paths":
-    { "@id": "x-orn:paths",
-      "@container": "@index"
-     },
-  "description": "x-orn:description",
-  "get": "x-orn:Get",
-  "post": "x-orn:Post",
-  "put": "x-orn:Put",
-  "patch": "x-orn:Patch",
-  "delete": "x-orn:Delete",
-  "parameters": "x-orn:OperationParameters",
-  "responses":
-    {"@id": "x-orn:OperationResponses",
-              "@container": "@index"
-    },
-  "properties":
-    {"@id": "x-orn:Properties",
-     "@container": "@index"
-    },
-  "content":
-    {"@id": "x-orn:Content",
-     "@container": "@index"
-    },
-    "schema": "x-orn:Schema"
+  "info": "x-orn:info"
   }
 }
