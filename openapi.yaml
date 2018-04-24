@@ -1,626 +1,707 @@
 openapi: 3.0.0
-x-orn-@id: 'https://chemidconvert/v2'
+x-orn-@id: 'https://lazar.openrisknet.org'
 x-orn-@type: 'x-orn:Service'
 servers:
-  - url: 'http://chemidconvert/v1'
+  - url: 'https://api.in-silico.ch/'
 info:
-  title: ChemIdConvert - Chemical identifier conversion service
-  description: >-
-    This REST Api allows you to submit chemical identifiers in one format and
-    translate it into another format (e.g. SMILES -> InChi)
-  version: 1.0.0
+  description: |
+    REST API webservice for lazar and nano-lazar. 
+
+    *lazar* (lazy structure–activity relationships) is a modular framework for
+    predictive toxicology. With activated Authentication & Authorization,
+    subjectid authorization token are obligatory for designated services.
+  version: 1.1.0
+  title: Lazar & Nano-Lazar REST Service
+  contact:
+    name: in silico toxicology gmbh
+    email: service@in-silico.ch
+    url: 'https://in-silico.ch'
+  license:
+    name: GNU GENERAL PUBLIC LICENSE
+    url: 'https://github.com/opentox/lazar-rest/blob/master/LICENSE'
+externalDocs:
+  description: |
+    See also *lazar-rest* documentation on Github
+  url: 'https://github.com/opentox/lazar-rest'
 paths:
-  /asSvg:
-    x-orn-@id: "https://chemidconvert/v1/asSvg"
+  /model:
     get:
-      summary: Returns an svg text of the given molecule
+      x-orn-@type: x-orn:Model
+      x-orn:path: https://lazar.openrisknet.org/model
+      x-orn:method: Get
+      tags:
+        - model
+      description: Get a list of all prediction models
       parameters:
-        - $ref: '#/components/parameters/smiles'
-        - name: width
-          in: query
-          description: SVG image width
-          required: false
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/model/{id}':
+    get:
+      x-orn-@type: x-orn:Model
+      x-orn:path: https://lazar.openrisknet.org/model
+      x-orn:method: Get
+      tags:
+        - model
+      description: Get model representation
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+    post:
+      x-orn-@type: x-orn:Prediction
+      x-orn:path: https://lazar.openrisknet.org/model/{id}
+      x-orn:method: Post
+      tags:
+        - model
+      description: Predict a compound or a nanoparticle
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      requestBody:
+        description: |
+          SMILES identifier or Nanoparticle URI or comma separated
+          list of SMILES  identifiers or Nanoparticle URI
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            x-orn:schema: "application/x-www-form-urlencoded"
+            schema:
+              $ref: '#/components/schemas/postmodel'
+  /report:
+    get:
+      x-orn-@type: x-orn:Report
+      x-orn:path: https://lazar.openrisknet.org/report
+      x-orn:method: Get
+      tags:
+        - report
+      description: Get a list of QMRF reports
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/report/{id}':
+    get:
+      x-orn-@type: x-orn:Report
+      x-orn:path: https://lazar.openrisknet.org/report/{id}
+      x-orn:method: Get
+      tags:
+        - report
+      description: Get QMRF for prediction model
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+  /dataset:
+    get:
+      x-orn-@type: x-orn:Dataset
+      x-orn:path: https://lazar.openrisknet.org/dataset
+      x-orn:method: Get
+      tags:
+        - dataset
+      description: Get a list of all datasets
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/dataset/{id}':
+    get:
+      x-orn-@type: x-orn:Dataset
+      x-orn:path: https://lazar.openrisknet.org/dataset/{id}
+      x-orn:method: Get
+      tags:
+        - dataset
+      description: Get dataset representation
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/dataset/{id}/{attribute}':
+    get:
+      x-orn-@type: x-orn:Dataset
+      x-orn:path: https://lazar.openrisknet.org/dataset/{id}/{attribute}
+      x-orn:method: Get
+      tags:
+        - dataset
+      description: Get dataset representation
+      parameters:
+        - name: attribute
+          in: path
+          description: requested attribute
+          required: true
           schema:
-            type: integer
-            default: 450
-        - name: height
-          in: query
-          description: SVG image height
-          required: false
+            type: string
+            enum:
+              - compounds
+              - nanoparticles
+              - substances
+              - features
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /substance:
+    get:
+      x-orn-@type: x-orn:Substance
+      x-orn:path: https://lazar.openrisknet.org/substance
+      x-orn:method: Get
+      tags:
+        - substance
+      description: Get a list of all substances
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/substance/{id}':
+    get:
+      x-orn-@type: x-orn:Substance
+      x-orn:path: https://lazar.openrisknet.org/substance/{id}
+      x-orn:method: Get
+      tags:
+        - substance
+      description: Get substance representation
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /nanoparticle:
+    get:
+      x-orn-@type: x-orn:Nanoparticle
+      x-orn:path: https://lazar.openrisknet.org/nanoparticle
+      x-orn:method: Get
+      tags:
+        - nanoparticle
+      description: Get a list of all nanoparticles
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/nanoparticle/{id}':
+    get:
+      x-orn-@type: x-orn:Nanoparticle
+      x-orn:path: https://lazar.openrisknet.org/nanoparticle/{id}
+      x-orn:method: Get
+      tags:
+        - nanoparticle
+      description: Get nanoparticle representation
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /feature:
+    get:
+      x-orn-@type: x-orn:Feature
+      x-orn:path: https://lazar.openrisknet.org/feature
+      x-orn:method: Get
+      tags:
+        - feature
+      description: Get a list of ids for all features
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/feature/{id}':
+    get:
+      x-orn-@type: x-orn:Feature
+      x-orn:path: https://lazar.openrisknet.org/feature/{id}
+      x-orn:method: Get
+      tags:
+        - feature
+      description: Get feature representation
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /validation:
+    get:
+      x-orn-@type: x-orn:Validation
+      x-orn:path: https://lazar.openrisknet.org/validation
+      x-orn:method: Get
+      tags:
+        - validation
+      description: Get a list of all validation types
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/validation/{validationtype}':
+    get:
+      x-orn-@type: x-orn:Validation
+      x-orn:path: https://lazar.openrisknet.org/validation/{validationtype}
+      x-orn:method: Get
+      tags:
+        - validation
+      description: Get all validations of a validation type
+      parameters:
+        - $ref: '#/components/parameters/valtype'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/validation/{validationtype}/{id}':
+    get:
+      x-orn-@type: x-orn:Validation
+      x-orn:path: https://lazar.openrisknet.org/validation/{validationtype}/{id}
+      x-orn:method: Get
+      tags:
+        - validation
+      description: Get validation representation
+      parameters:
+        - $ref: '#/components/parameters/valtype'
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /compound/descriptor:
+    get:
+      x-orn-@type: x-orn:Descriptor
+      x-orn:path: https://lazar.openrisknet.org/compound/descriptor
+      x-orn:method: Get
+      tags:
+        - compound
+        - descriptor
+      description: Get a list of all descriptors
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      x-orn-@type: x-orn:Prediction
+      x-orn:path: https://lazar.openrisknet.org/compound/descriptor
+      x-orn:method: Post
+      tags:
+        - compound
+        - descriptor
+      summary: Descriptor calculation
+      description: Calculate descriptors for a single compound as SMILES string
+      parameters:
+        - $ref: '#/components/parameters/subjectid'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+      requestBody:
+        description: identifier and descriptor/s
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            x-orn:schema: "application/x-www-form-urlencoded"
+            schema:
+              $ref: '#/components/schemas/postdescriptor'
+  '/compound/descriptor/{descriptor}':
+    get:
+      x-orn-@type: x-orn:Descriptor
+      x-orn:path: https://lazar.openrisknet.org/compound/descriptor/{descriptor}
+      x-orn:method: Get
+      tags:
+        - compound
+        - descriptor
+      description: Get informations about a single descriptor
+      parameters:
+        - name: descriptor
+          in: path
+          description: descriptor name or ID
+          required: true
           schema:
-            type: integer
-            default: 450
+            type: string
+        - $ref: '#/components/parameters/subjectid'
       responses:
         '200':
-          description: Successfully created an svg represenatation
-          content:
-            image/svg+xml:
-              schema:
-                type: string
-                description: The text representation of the svg of the molecule
-        default:
-          description: Unexpected error
-          content:
-            image/svg+xml:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /molWeight:
-    x-orn-@id: "https://chemidconvert/v1/molWeight"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Returns the molecular weight (calculated with rdkit)
-      parameters:
-        - $ref: '#/components/parameters/smiles'
-      responses:
-        '200':
-          $ref: '#/components/responses/molWeight'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /smiles/to/inchi:
-    x-orn-@id: "https://chemidconvert/v1/smiles/to/inchi"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a SMILES format into InChI format
-      description: >
-        Converts from a SMILES format into InChI format. Only a single match is
-        returned if there is an ambiguity in the conversion. The conversion is
-        performed in process via rdkit.
-      tags:
-        - SMILES
-        - InChI
-      parameters:
-        - $ref: '#/components/parameters/smiles'
-      responses:
-        '200':
-          $ref: '#/components/responses/inchi'
+          $ref: '#/components/responses/200'
         '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /inchi/to/smiles:
-    x-orn-@id: "https://chemidconvert/v1/inchi/to/smiles"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a InChI format into (canonical) SMILES format
-      description: >
-        Converts from InChI format into (canonical) SMILES. Only a single match
-        is returned if there is an ambiguity in the conversion. The conversion
-        is performed in process via rdkit.
-      tags:
-        - SMILES
-        - InChI
-      parameters:
-        - $ref: '#/components/parameters/inchi'
-      responses:
-        '200':
-          $ref: '#/components/responses/smiles'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /inchi/to/inchikey:
-    x-orn-@id: "https://chemidconvert/v1/inchi/to/inchikey"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a InChI format into InChIKey format
-      description: >
-        Converts from InChI format into InChIKey. The conversion is performed in
-        process via rdkit.
-      tags:
-        - InChI
-        - InChIKey
-      parameters:
-        - $ref: '#/components/parameters/inchi'
-      responses:
-        '200':
-          $ref: '#/components/responses/inchikey'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /inchikey/to/inchi:
-    x-orn-@id: "https://chemidconvert/v1/inchikey/to/inchi"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a InChIKey format into InChI format
-      description: >
-        Converts from InChIKey format into InChI. The conversion is performed by
-        using an external webservice and has relatively high latency.
-      tags:
-        - InChI
-        - InChIKey
-      parameters:
-        - $ref: '#/components/parameters/inchikey'
-      responses:
-        '200':
-          $ref: '#/components/responses/inchi'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /smiles/to/inchikey:
-    x-orn-@id: "https://chemidconvert/v1/smiles/to/inchikey"
-    x-orn-@type: "orn:Endpoint"
+          $ref: '#/components/responses/500'
+  '/compound/{InChI}':
     get:
-      summary: Converts from a SMILES format into InChIKey format
-      description: >
-        Converts from SMILES format into InChIKey. The conversion is performed
-        in process via rdkit.
+      x-orn-@type: x-orn:Compound
+      x-orn:path: https://lazar.openrisknet.org/compound/{InChI}
+      x-orn:method: Get
       tags:
-        - SMILES
-        - InChIKey
+        - compound
+      description: Get compound representation
       parameters:
-        - $ref: '#/components/parameters/smiles'
+        - $ref: '#/components/parameters/InChI'
+        - $ref: '#/components/parameters/subjectid'
       responses:
         '200':
-          $ref: '#/components/responses/inchikey'
+          $ref: '#/components/responses/200'
         '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /inchikey/to/smiles:
-    x-orn-@id: "https://chemidconvert/v1/inchikey/to/smiles"
-    x-orn-@type: "orn:Endpoint"
+          $ref: '#/components/responses/400'
+  /api/api.json:
     get:
-      summary: Converts from a InChIKey format into (canonical) SMILES format
-      description: >
-        Converts from InChIKey format into (canonical) SMILES. The conversion is
-        performed by using an external webservice and has relatively high
-        latency.
       tags:
-        - SMILES
-        - InChIKey
-      parameters:
-        - $ref: '#/components/parameters/inchikey'
+        - api
+      description: Get swagger api in JSON
       responses:
         '200':
-          $ref: '#/components/responses/smiles'
+          $ref: '#/components/responses/200'
         '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
+          $ref: '#/components/responses/400'
         '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /smiles/to/cas:
-    x-orn-@id: "https://chemidconvert/v1/smiles/to/cas"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a SMILES format into a CAS number
-      description: >
-        Converts from a SMILES format into a CAS number. Only a single match is
-        returned if there is an ambiguity in the conversion. The conversion is
-        performed by using an external webservice and has relatively high
-        latency.
+          $ref: '#/components/responses/500'
+  /aa/authenticate:
+    post:
+      x-orn-@type: x-orn:Authentication
+      x-orn:path: https://lazar.openrisknet.org/aa/authenticate
+      x-orn:method: Post
       tags:
-        - SMILES
-        - CAS
-      parameters:
-        - $ref: '#/components/parameters/smiles'
+        - authentication
+      summary: Get token
+      description: |
+        Authentication against OpenSSO. Returns authentication token. Requires
+        Username and Password.
+      operationId: login
       responses:
         '200':
-          $ref: '#/components/responses/cas'
+          $ref: '#/components/responses/200'
         '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /cas/to/smiles:
-    x-orn-@id: "https://chemidconvert/v1/cas/to/smiles"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a CAS number into (canonical) SMILES format
-      description: >
-        Converts from a CAS number into (canonical) SMILES. Only a single match
-        is returned if there is an ambiguity in the conversion. The conversion
-        is performed by using an external webservice and has relatively high
-        latency.
+          $ref: '#/components/responses/500'
+      requestBody:
+        description: username and password
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            x-orn:schema: "application/x-www-form-urlencoded"
+            schema:
+              $ref: '#/components/schemas/postauth'
+  /aa/logout:
+    post:
+      x-orn-@type: x-orn:Authentication
+      x-orn:path: https://lazar.openrisknet.org/aa/logout
+      x-orn:method: Post
+      description: Devalidates a token. Requires Subjectid.
+      summary: Destroy token
+      operationId: logout
       tags:
-        - SMILES
-        - CAS
-      parameters:
-        - $ref: '#/components/parameters/cas'
+        - authentication
       responses:
         '200':
-          $ref: '#/components/responses/smiles'
+          $ref: '#/components/responses/200'
         '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /inchi/to/cas:
-    x-orn-@id: "https://chemidconvert/v1/inchi/to/cas"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a InChI format into a CAS number
-      description: >
-        Converts from a InChI format into a CAS number. Only a single match is
-        returned if there is an ambiguity in the conversion. The conversion is
-        performed by using an external webservice and has relatively high
-        latency.
-      tags:
-        - CAS
-        - InChI
-      parameters:
-        - $ref: '#/components/parameters/inchi'
-      responses:
-        '200':
-          $ref: '#/components/responses/cas'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /cas/to/inchi:
-    x-orn-@id: "https://chemidconvert/v1/cas/to/inchi"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a CAS number into InChI format
-      description: >
-        Converts from a CAS number into InChI. Only a single match is returned
-        if there is an ambiguity in the conversion. The conversion is performed
-        by using an external webservice and has relatively high latency.
-      tags:
-        - CAS
-        - InChI
-      parameters:
-        - $ref: '#/components/parameters/cas'
-      responses:
-        '200':
-          $ref: '#/components/responses/inchi'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /inchikey/to/cas:
-    x-orn-@id: "https://chemidconvert/v1/inchikey/to/cas"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a InChIKey format into a CAS number
-      description: >
-        Converts from a InChIKey format into a CAS number. Only a single match
-        is returned if there is an ambiguity in the conversion. The conversion
-        is performed by using an external webservice and has relatively high
-        latency.
-      tags:
-        - CAS
-        - InChIKey
-      parameters:
-        - $ref: '#/components/parameters/inchikey'
-      responses:
-        '200':
-          $ref: '#/components/responses/cas'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-  /cas/to/inchikey:
-    x-orn-@id: "https://chemidconvert/v1/cas/to/inchikey"
-    x-orn-@type: "orn:Endpoint"
-    get:
-      summary: Converts from a CAS number into InChIKey format
-      description: >
-        Converts from a CAS number into InChIKey. Only a single match is
-        returned if there is an ambiguity in the conversion. The conversion is
-        performed by using an external webservice and has relatively high
-        latency.
-      tags:
-        - CAS
-        - InChIKey
-      parameters:
-        - $ref: '#/components/parameters/cas'
-      responses:
-        '200':
-          $ref: '#/components/responses/inchikey'
-        '400':
-          description: >-
-            Invalid request (typically a mandatory parameter was missing or
-            malformed)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '500':
-          description: Error in conversion by external webservice
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        '504':
-          description: Upstream service timeout
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/simpleError'
+          $ref: '#/components/responses/500'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            x-orn:schema: "application/x-www-form-urlencoded"
+            schema:
+              $ref: '#/components/schemas/postlogout'
+tags:
+  - name: api
+    description: Swagger API representation in JSON
+  - name: algorithm
+    description: Algorithm
+  - name: authentication
+    description: minimal Authentication service
+  - name: compound
+    description: Compound
+  - name: dataset
+    description: Dataset
+  - name: descriptor
+    description: Descriptor
+  - name: feature
+    description: Feature
+  - name: model
+    description: Lazar Model Service
+  - name: nanoparticle
+    description: Nanoparticle
+  - name: report
+    description: QMRF Reporting
+  - name: substance
+    description: Substance
+  - name: validation
+    description: Validation
 components:
+  schemas:
+    postmodel:
+      type: object
+      properties:
+        identifier:
+          x-orn:property: "identifier"
+          type: string
+          example: "O=C1NC(=O)NC=C1"
+    postdescriptor:
+      type: object
+      properties:
+        identifier:
+          x-orn:property: "identifier"
+          type: string
+          example: "O=C1NC(=O)NC=C1"
+        descriptor:
+          x-orn:property: "descriptor"
+          type: string
+          example: "Openbabel.MW,Openbabel.atoms"
+    postauth:
+      type: object
+      properties:
+        username:
+          x-orn:property: "username"
+          type: string
+        password:
+          x-orn:property: "password"
+          type: string
+          format: password
+    postlogout:
+      type: object
+      properties:
+        subjectid:
+          x-orn:property: "subjectid"
+          type: string
   parameters:
-    smiles:
-      x-orn-@type: "http://semanticscience.org/resource/CHEMINF_000018"
-      name: smiles
-      in: query
-      description: Compound structure notated using SMILES notation
+    id:
+      name: id
+      in: path
+      description: id
       required: true
       schema:
         type: string
-        format: smiles
-    inchi:
-      x-orn-@type: "http://semanticscience.org/resource/CHEMINF_000113"
-      name: inchi
-      in: query
-      description: Compound structure notated using InChI notation
+    InChI:
+      name: InChI
+      in: path
+      description: InChI String
       required: true
       schema:
         type: string
-    inchikey:
-      x-orn-@type: "http://semanticscience.org/resource/CHEMINF_000059"
-      name: inchikey
-      in: query
-      description: Compound structure notated using InChIKey notation
+    valtype:
+      name: validationtype
+      in: path
+      description: validation type
       required: true
       schema:
         type: string
-    cas:
-      x-orn-@type: "http://semanticscience.org/resource/CHEMINF_000446"
-      name: cas
-      in: query
-      description: >-
-        Compound structure notated as a CAS number (3 groups of numbers
-        separated by dashes)
+    subjectid:
+      in: header
+      name: subjectid
+      description: authorization token
+      required: false
+      schema:
+        type: string
+    subjectidRequired:
+      in: header
+      name: subjectid
+      description: authorization token
       required: true
       schema:
         type: string
   responses:
-    inchi:
-      description: The converted InChI string
+    '200':
+      description: OK
       content:
         application/json:
+          x-orn:returns: "application/json"
           schema:
             type: object
-            properties:
-              inchi:
-                type: string
-                description: Compound structure notated using InChI notation
-    smiles:
-      description: The converted SMILES string
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              smiles:
-                type: string
-                description: Compound structure notated using (canonical) SMILES notation
-    inchikey:
-      description: The converted InChIKey string
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              inchikey:
-                type: string
-                description: Compound structure notated using InChIKey
-    cas:
-      description: The converted CAS number (3 groups of numbers separated by dashes)
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              cas:
-                type: string
-                description: Compound structure notated using a CAS number
-    molWeight:
-      description: The molecular weight (caluclated with rdkit)
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              smiles:
-                type: string
-                description: Compound structure notated using (canonical) SMILES notation
-              molWeight:
-                type: number
-                description: The molecular weight (caluclated with rdkit)
-  schemas:
-    simpleError:
-      type: string
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Resource Not Found
+    '500':
+      description: Server Error
+

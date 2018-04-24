@@ -1,43 +1,64 @@
-PREFIX orn: <http://openrisknet.org/schema/>
+PREFIX orn: <http://openrisknet.org/schema#>
 # Only one query can be active at a time, the rest have to be commented out
 
 # A very simple query the title of the Api:
-SELECT ?title
-WHERE {
-?tool orn:info ?info.
-?info orn:title ?title
-}
+#SELECT ?title
+#WHERE {
+#?tool orn:info ?info.
+#?info orn:title ?title
+#}
 
 # Get all tripples that could be resolved using the JsonLd context
-#SELECT * {?s ?p ?o}
+SELECT * {?s ?p ?o}
 
-# Get all high level inputs and outputs for available endpoints of an API
-#SELECT *
-#WHERE {
-#  ?endpoint orn:expects|orn:returns ?inputoutput
+# Retrieves content based on "Use Cases for annotated APIs with Query Tool"
+# a) service that can make a prediction
+
+
+#SELECT ?service ?description ?method ?path ?paramsDescription ?paramsName ?paramsIn ?paramsSchema ?bodyContent ?bodyDescription ?bodyRequired ?contentSchema ?schemaProperties ?property ?contentProperty ?cType ?contentExample ?responseMimeType WHERE {
+# service name
+#?service a orn:Service.
+# does a prediction
+#?prediction a orn:Prediction.
+# service path
+# kind of prediction
+#?prediction orn:summary|orn:description ?description;
+# REST method
+#orn:method ?method;
+# collect subnodes
+#orn:path ?path;
+#orn:parameters ?parameters;
+#orn:requestBody ?body;
+#orn:responses ?responses.
+# handle each subnode params body response
+# parameters
+#OPTIONAL {
+#?parameters orn:description ?paramsDescription;
+#orn:in ?paramsIn;
+#orn:name ?paramsName;
+#orn:schema ?pS.
+#?pS orn:type ?paramsSchema.
 #}
-
-# Select all endpoints that take smiles as parameter input and give inchis as output
-#SELECT ?endpoint
-#WHERE {
-# ?endpoint rdf:type <orn:Endpoint>.
-# ?endpoint orn:Get ?get.
-# ?get orn:OperationParameters ?params.
-# ?params (orn:expects|!orn:expects)* <http://semanticscience.org/resource/CHEMINF_000018>.
-# ?get orn:OperationResponses ?responses.
-# ?responses (orn:expects|!orn:expects)* ?responsechild.
-# ?responsechild <http://semanticscience.org/resource/CHEMINF_000113> ?inchinode
+# body
+#OPTIONAL {
+#?body orn:content ?bodyContent;
+#orn:description ?bodyDescription;
+#orn:required ?bodyRequired.
+#OPTIONAL { ?bodyContent ?p ?contentType. ?contentType orn:schema ?contentSchema.}
+#OPTIONAL { ?bodyContent ?p ?contentType. ?contentType orn:schema ?contentSchema.
+#?contentSchema orn:properties ?schemaProperties.
+#?schemaProperties ?pr ?property.
+#?property orn:property ?contentProperty;
+#orn:example ?contentExample;
+#orn:type ?cType.
 #}
-
-
-# Get the route of the sevice and type of compound to get MolWeight
-# This example assumes to use a GET request.
-# REST methods only defined as predicates so far and can not be queried ?!
-#SELECT ?route ?expect ?type WHERE {
-# ?route a orn:Prediction.
-# ?route orn:returns orn:molecularMass.
-# ?route orn:Get ?get.
-# ?route orn:expects ?expect.
-# ?get orn:OperationParameters ?op.
-# ?op a ?type
+# response
+#OPTIONAL {
+#?responses orn:200 ?200.
+#?200 orn:content ?returnContent.
+#?returnContent ?pmime ?resmime.
+#?resmime orn:returns ?responseMimeType.
 #}
+#}
+#}
+#ORDER BY ?path
