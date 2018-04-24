@@ -1,0 +1,43 @@
+PREFIX orn: <http://openrisknet.org/schema/>
+# Only one query can be active at a time, the rest have to be commented out
+
+# A very simple query the title of the Api:
+SELECT ?title
+WHERE {
+?tool orn:info ?info.
+?info orn:title ?title
+}
+
+# Get all tripples that could be resolved using the JsonLd context
+#SELECT * {?s ?p ?o}
+
+# Get all high level inputs and outputs for available endpoints of an API
+#SELECT *
+#WHERE {
+#  ?endpoint orn:expects|orn:returns ?inputoutput
+#}
+
+# Select all endpoints that take smiles as parameter input and give inchis as output
+#SELECT ?endpoint
+#WHERE {
+# ?endpoint rdf:type <orn:Endpoint>.
+# ?endpoint orn:Get ?get.
+# ?get orn:OperationParameters ?params.
+# ?params (orn:expects|!orn:expects)* <http://semanticscience.org/resource/CHEMINF_000018>.
+# ?get orn:OperationResponses ?responses.
+# ?responses (orn:expects|!orn:expects)* ?responsechild.
+# ?responsechild <http://semanticscience.org/resource/CHEMINF_000113> ?inchinode
+#}
+
+
+# Get the route of the sevice and type of compound to get MolWeight
+# This example assumes to use a GET request.
+# REST methods only defined as predicates so far and can not be queried ?!
+#SELECT ?route ?expect ?type WHERE {
+# ?route a orn:Prediction.
+# ?route orn:returns orn:molecularMass.
+# ?route orn:Get ?get.
+# ?route orn:expects ?expect.
+# ?get orn:OperationParameters ?op.
+# ?op a ?type
+#}
