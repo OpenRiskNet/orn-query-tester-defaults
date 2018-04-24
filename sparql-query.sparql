@@ -1,4 +1,4 @@
-PREFIX orn: <http://openrisknet.org/schema/>
+PREFIX orn: <http://openrisknet.org/schema#>
 # Only one query can be active at a time, the rest have to be commented out
 
 # A very simple query the title of the Api:
