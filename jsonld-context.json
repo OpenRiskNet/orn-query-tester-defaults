@@ -1,11 +1,9 @@
 {"@context": {
-  "@vocab": "http://openrisknet.org/schema#",
-  "x-orn": "http://openrisknet.org/schema#",
+    "@vocab": "http://openrisknet.org/schema#",
+    "x-orn": "http://openrisknet.org/schema#",
     "x-orn-@id": "@id",
     "x-orn-@type":"@type",
-    "title": "x-orn:title",
-  "info": "x-orn:info",
-  
+
     "smiles": "http://semanticscience.org/resource/CHEMINF_000018",
     "inchi": "http://semanticscience.org/resource/CHEMINF_000113",
     "inchikey": "http://semanticscience.org/resource/CHEMINF_000059",
