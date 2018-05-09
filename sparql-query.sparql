@@ -62,3 +62,25 @@ SELECT * {?s ?p ?o}
 #}
 #}
 #ORDER BY ?path
+
+# Retrieves content based on "Use Cases for annotated APIs with Query Tool"
+# e) i) 1) list services that can handle specific content formats e.g. chemical/x-mdl-sdfile
+
+#SELECT ?service ?description ?path ?rest ?input ?output WHERE {
+## service name
+#?service a orn:Service.
+#?service orn:info ?info.
+#?info orn:description ?description.
+## handle SD files
+#?s <http://openrisknet.org/schema#chemical/x-mdl-sdfile> ?format.
+## show REST method, path
+#?content orn:content ?s.
+#?200 orn:200 ?content.
+#?responses orn:responses ?200.
+#?responses orn:path ?path.
+#?responses orn:method ?rest.
+## show input, output
+#?format orn:returns ?output.
+#?format orn:schema ?schema.
+#?schema orn:property ?input.
+#}
