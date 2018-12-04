@@ -84,3 +84,13 @@ SELECT * {?s ?p ?o}
 #?format orn:schema ?schema.
 #?schema orn:property ?input.
 #}
+
+# https://github.com/OpenRiskNet/openapi-examples/issues/3
+# Query JSON-LD for "Which services are available to return a molecular weight?"
+
+#SELECT ?service ?descriptor ?format WHERE {
+#?service a orn:Service.
+#?s orn:returns ?o.
+#?o ?descriptor ?format
+#FILTER regex(str(?format), "Molecular Weight")
+#}
